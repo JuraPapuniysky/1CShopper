@@ -9,6 +9,15 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use GeoIp2\Database\Reader;
+
+try {
+    $reader = new Reader('data/GeoLite2-City.mmdb');
+    $geo = $reader->city(Yii::$app->request->userIP);
+    $city = $geo->city->name;
+}catch (\GeoIp2\Exception\AddressNotFoundException $e){
+    $city = 'localhost';
+}
 
 AppAsset::register($this);
 ?>
@@ -30,12 +39,9 @@ AppAsset::register($this);
     <header class="header">
         <div class="header-desktop hidden-xs hidden-sm yellow-bg">
             <div class="container">
-                <a href="/" class="logo"><img src="img/logo.png"></a>
-                <a class="header-phone" href="tel:+380984553654">
-                    +3 098 455 3654 
-                    
+                <a href="/" class="logo"><?= Html::img('img/logo.png')?></a>
+                <?= Html::a(\common\models\InfoTable::findOne(1)->main_phone, ['site/request-call'], ['class' => 'header-phone']) ?>
 
-                </a>
                 <div class="header-links">
                     <?= Html::a('<img src="img/icon-cart.png">', ['site/cart'],['class' => 'cart-link']) ?>
                     <div class="auth-links">
@@ -142,8 +148,8 @@ AppAsset::register($this);
     <footer class="footer">
         <div class="container">
             <div class="logo-container footer-left-block">
-                <a href="/" class="logo">Logo...///</a>
-                <div class="logo-text">Какой-то текст какой-то текст какой-то это текст</div>
+                <a href="/" class="logo"><?= Html::img('img/logo.png')?></a>
+                <div class="logo-text">Lorem</div>
             </div>
             <div class="footer-menu-links footer-center-block">
                 <a href="#" class="footer-menu-link">Где купить?</a>
@@ -152,9 +158,9 @@ AppAsset::register($this);
                 <a href="#" class="footer-menu-link">Покупка и доставка</a>
             </div>
             <div class="footer-info-links footer-right-block">
-                <div class="footer-city"><span>Ваш город: </span><a href="#" class="your-city">Сумы</a></div>
-                <a href="tel:+380505065255" class="footer-phone">050 506 5255</a>
-                <a href="tel:+380668789112" class="footer-phone">066 878 9112</a>
+                <div class="footer-city"><span>Ваш город: </span><a href="#" class="your-city"><?php echo $city; ?></a></div>
+                <a href="/" class="footer-phone"><?= \common\models\InfoTable::findOne(1)->phone1 ?></a>
+                <a href="/" class="footer-phone"><?= \common\models\InfoTable::findOne(1)->email ?></a>
                 <div class="footer-socials">
                     <a href="#" class="footer-social-link"><img src="img/footer-icon-mail.png"></a>
                     <a href="#" class="footer-social-link"><img src="img/footer-icon-vk.png"></a>

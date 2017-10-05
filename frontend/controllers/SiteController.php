@@ -289,6 +289,7 @@ class SiteController extends Controller
         $model = new Order();
 
         if (($user_info = UserInfo::findOne(['user_id' => Yii::$app->user->id])) !== null){
+            $model->user_id = Yii::$app->user->id;
             $model->last_name = $user_info->last_name;
             $model->first_name = $user_info->first_name;
             $model->phone = $user_info->phone;

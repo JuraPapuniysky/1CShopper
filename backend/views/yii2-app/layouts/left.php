@@ -39,12 +39,13 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Categories', 'icon' => 'file-code-o', 'url' => ['/category'],],
-                            ['label' => 'Type', 'icon' => 'dashboard', 'url' => ['/type'],],
-                            ['label' => 'Products', 'icon' => 'file-code-o', 'url' => ['/product'],],
-                            ['label' => 'Slider', 'icon' => 'file-code-o', 'url' => ['/slider'],],
-                            ['label' => 'Users', 'icon' => 'file-code-o', 'url' => ['/user'],],
-                            ['label' => 'Orders', 'icon' => 'file-code-o', 'url' => ['/order'],],
+                            ['label' => 'Категории', 'icon' => 'file-code-o', 'url' => ['/category'],],
+                            ['label' => 'Под категории', 'icon' => 'dashboard', 'url' => ['/type'],],
+                            ['label' => 'Продукты', 'icon' => 'file-code-o', 'url' => ['/product'],],
+                            ['label' => 'Слайдер', 'icon' => 'file-code-o', 'url' => ['/slider'],],
+                            ['label' => 'Пользователи', 'icon' => 'file-code-o', 'url' => ['/user'],],
+                            ['label' => 'Заказы', 'icon' => 'file-code-o', 'url' => ['/order'],],
+                            ['label' => 'Информация', 'icon' => 'file-code-o', 'url' => ['/info-table'],],
 
                             [
                                 'label' => 'Level One',
