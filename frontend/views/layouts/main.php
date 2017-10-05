@@ -30,7 +30,7 @@ AppAsset::register($this);
     <header class="header">
         <div class="header-desktop hidden-xs hidden-sm yellow-bg">
             <div class="container">
-                <a href="/" class="logo">Logo...///</a>
+                <a href="/" class="logo"><img src="img/logo.png"></a>
                 <a class="header-phone" href="tel:+380984553654">
                     +3 098 455 3654 
                     

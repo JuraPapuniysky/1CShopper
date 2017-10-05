@@ -1,6 +1,7 @@
 <?php
 /* @var $this \yii\web\View */
 /* @var $cart \common\models\Cart */
+/* @var $user_info \common\models\UserInfo */
 
 $this->title = 'Корзина';
 ?>
@@ -26,24 +27,32 @@ $this->title = 'Корзина';
                 <div class="user-account-info">
                     <div class="user-account-info-title">
                         <span>Мои данные</span>
-                        <button class="edit-user-info-button">Редактировать</button>
+                        <?= \yii\helpers\Html::a('Редактировать', ['site/update-user-info'], ['class' => 'edit-user-info-button']) ?>
                     </div>
                     <div class="user-account-bottom">
                         <div class="user-account-personal">
                             <div class="user-account-personal-parameter user-account-mail">
                                 <div class="user-account-personal-title">Почта:</div>
-                                <div class="user-account-personal-value"></div>
+                                <div class="user-account-personal-value"><?= \common\models\User::findIdentity(Yii::$app->user->id)->email ?></div>
                             </div>
                             <div class="user-account-personal-parameter user-account-login">
                                 <div class="user-account-personal-title">Логин:</div>
-                                <div class="user-account-personal-value"></div>
+                                <div class="user-account-personal-value"><?= \common\models\User::findIdentity(Yii::$app->user->id)->username ?></div>
                             </div>
-                            <div class="user-account-personal-parameter user-account-password">
-                                <div class="user-account-personal-title">Пароль:</div>
-                                <div class="user-account-personal-value"></div>
+                            <div class="user-account-personal-parameter user-account-login">
+                                <div class="user-account-personal-title">Имя:</div>
+                                <div class="user-account-personal-value"><?= $user_info->first_name ?></div>
+                            </div>
+                            <div class="user-account-personal-parameter user-account-login">
+                                <div class="user-account-personal-title">Фамилия:</div>
+                                <div class="user-account-personal-value"><?= $user_info->last_name ?></div>
+                            </div>
+                            <div class="user-account-personal-parameter user-account-login">
+                                <div class="user-account-personal-title">Телефон:</div>
+                                <div class="user-account-personal-value"><?= $user_info->phone ?></div>
                             </div>
                         </div>
-                        <div class="user-account-socials">
+                       <!-- <div class="user-account-socials">
                             <div class="user-account-socials-title">Подключить профиль социальной сети:</div>
                             <div class="user-account-socials-links">
                                 <button class="user-account-social-link"><img src="img/footer-icon-vk.png"></button>
@@ -52,7 +61,7 @@ $this->title = 'Корзина';
                                 <button class="user-account-social-link"><img src="img/footer-icon-ok.png"></button>
                                 <button class="user-account-social-link"><img src="img/footer-icon-fb.png"></button>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

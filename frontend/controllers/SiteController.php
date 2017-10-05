@@ -7,6 +7,8 @@ use common\models\Order;
 use common\models\OrderProduct;
 use common\models\Product;
 use common\models\Type;
+use common\models\User;
+use common\models\UserInfo;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -230,9 +232,15 @@ class SiteController extends Controller
            $cart = $query->where(['user_ip' => Yii::$app->request->userIP])->one();
         }
 
+        if (($user_info = UserInfo::findOne(['user_id' => Yii::$app->user->id])) === null){
+            $user_info = new UserInfo();
+            $user_info->user_id = Yii::$app->user->id;
+            $user_info->save();
+        }
 
         return $this->render('cart', [
             'cart' => $cart,
+            'user_info' => $user_info,
         ]);
     }
 
@@ -277,7 +285,15 @@ class SiteController extends Controller
 
     public function actionOrder()
     {
+
         $model = new Order();
+
+        if (($user_info = UserInfo::findOne(['user_id' => Yii::$app->user->id])) !== null){
+            $model->last_name = $user_info->last_name;
+            $model->first_name = $user_info->first_name;
+            $model->phone = $user_info->phone;
+            $model->email = User::findIdentity(Yii::$app->user->id)->email;
+        }
 
         if($model->load(Yii::$app->request->post())){
             $model->status = Order::STATUS_CONFIRMED;
@@ -331,6 +347,22 @@ class SiteController extends Controller
         return $this->render('product', [
            'model' => $model,
         ]);
+    }
+
+    public function actionUpdateUserInfo()
+    {
+       if (($model = UserInfo::findOne(['user_id' => Yii::$app->user->id])) === null){
+           $model = new UserInfo();
+           $model->user_id = Yii::$app->user->id;
+       }
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()){
+            return $this->redirect(['site/cart']);
+        } else {
+            return $this->render('update_user_info', [
+                'model' => $model,
+            ]);
+        }
     }
 
     protected function findProduct($id)
