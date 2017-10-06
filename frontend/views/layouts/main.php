@@ -120,9 +120,12 @@ AppAsset::register($this);
 
                     <div class="menu-item search-menu-item">
 
-                        <form class="search-form">
-                            <input type="search" name="" class="search-input" hidden>
-                        </form>
+                        <?php $search = new \frontend\models\SearchForm(); $form = ActiveForm::begin(['action' => ['site/search'], 'options' => ['class' => 'search-form']]); ?>
+
+                        <?= $form->field($search, 'searchParam')->textInput(['maxlength' => true, 'class' => 'search-input'])->label(false) ?>
+
+
+                        <?php ActiveForm::end(); ?>
                     </div>
                 </div>
             </div>
