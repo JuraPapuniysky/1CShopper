@@ -9,6 +9,7 @@ use common\models\Product;
 use common\models\Type;
 use common\models\User;
 use common\models\UserInfo;
+use frontend\models\SearchForm;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -363,6 +364,20 @@ class SiteController extends Controller
             return $this->render('update_user_info', [
                 'model' => $model,
             ]);
+        }
+    }
+
+    public function actionSearch()
+    {
+        $model = new SearchForm();
+
+        if($model->load(Yii::$app->request->post())){
+
+            return $this->render('search', [
+               'products' => $model->searchResults(),
+            ]);
+        }else{
+            return $this->goHome();
         }
     }
 

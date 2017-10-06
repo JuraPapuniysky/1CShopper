@@ -10,6 +10,7 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 use GeoIp2\Database\Reader;
+use yii\widgets\ActiveForm;
 
 try {
     $reader = new Reader('data/GeoLite2-City.mmdb');
@@ -39,7 +40,7 @@ AppAsset::register($this);
     <header class="header">
         <div class="header-desktop hidden-xs hidden-sm yellow-bg">
             <div class="container">
-                <a href="/" class="logo"><?= Html::img('img/logo.png')?></a>
+                <a href="/" class="logo">Logo.../</a>
                 <?= Html::a(\common\models\InfoTable::findOne(1)->main_phone, ['site/request-call'], ['class' => 'header-phone']) ?>
 
                 <div class="header-links">
@@ -60,7 +61,7 @@ AppAsset::register($this);
         <div class="menu hidden-xs hidden-sm">
             <div class="container">
 
-                <?php foreach (\common\models\Category::find()->orderBy('num')->all() as $category) {?>
+                <?php $categories = \common\models\Category::find()->orderBy('num')->all();  foreach ($categories as $category) {?>
                     <div class="menu-item">
                         <a href="/" class="main-menu-link"><?= $category->name ?></a>
                         <div class="submenu-links">
@@ -72,9 +73,15 @@ AppAsset::register($this);
                 <?php } ?>
 
                 <div class="menu-item search-menu-item">
-                    <form class="search-form">
-                        <input type="search" name="" class="search-input">
-                    </form>
+
+                    <?php $search = new \frontend\models\SearchForm(); $form = ActiveForm::begin(['action' => ['site/search'], 'options' => ['class' => 'search-form']]); ?>
+
+                    <?= $form->field($search, 'searchParam')->textInput(['maxlength' => true, 'class' => 'search-input'])->label(false) ?>
+
+
+                    <?php ActiveForm::end(); ?>
+
+
                 </div>
             </div>
         </div>
@@ -88,48 +95,33 @@ AppAsset::register($this);
                     <span class="burger-line"></span>
                 </button>
                 <div class="mobile-menu-container hidden">
-                    <a href="/" class="auth-link">Войти</a>
-                    <a href="/" class="auth-link">Регистрация</a>
-                    <a class="header-phone" href="tel:+380984553654">+3 098 455 3654</a>
+                    <?php if (Yii::$app->user->isGuest) { ?>
+                        <?= Html::a('Войти', ['site/login'], ['data-method' => 'post', 'class' => 'auth-link']) ?>
+                        <?= Html::a('Регистрация', ['site/signup'], ['data-method' => 'post', 'class' => 'auth-link']) ?>
+                    <?php }else{?>
+                        <?= Html::a('Выйти('.\common\models\User::findIdentity(Yii::$app->user->id)->username.')',
+                            ['/site/logout'],
+                            ['data-method' => 'post', 'class' => 'auth-link']) ?>
+                    <?php } ?>
+                    <?= Html::a(\common\models\InfoTable::findOne(1)->main_phone, ['site/request-call'], ['class' => 'header-phone']) ?>
+
+                    <?php foreach ($categories as $category){ ?>
+
                     <div class="menu-item">
-                        <a href="/" class="main-menu-link">Собственные решения</a>
+                        <a href="/" class="main-menu-link"><?= $category->name ?></a>
                         <div class="submenu-links hidden">
-                            <a href="#" class="submenu-link">Подменю</a>
-                            <a href="#" class="submenu-link">Подменю</a>
-                            <a href="#" class="submenu-link">Подменю</a>
-                            <a href="#" class="submenu-link">Подменю</a>
+                            <?php foreach ($category->getTypes()->all() as $type) { ?>
+                                <?= Html::a($type->name, ['site/type', 'id' => $type->id], ['class' => 'submenu-link']) ?>
+                            <?php } ?>
                         </div>
                     </div>
-                    <div class="menu-item">
-                        <a href="/" class="main-menu-link">Предприятие</a>
-                        <div class="submenu-links hidden">
-                            <a href="#" class="submenu-link">Подменю</a>
-                            <a href="#" class="submenu-link">Подменю</a>
-                            <a href="#" class="submenu-link">Подменю</a>
-                            <a href="#" class="submenu-link">Подменю</a>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <a href="/" class="main-menu-link">Отраслевые  программы 1С</a>
-                        <div class="submenu-links hidden">
-                            <a href="#" class="submenu-link">Подменю</a>
-                            <a href="#" class="submenu-link">Подменю</a>
-                            <a href="#" class="submenu-link">Подменю</a>
-                            <a href="#" class="submenu-link">Подменю</a>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <a href="/" class="main-menu-link">Акции</a>
-                        <div class="submenu-links hidden">
-                            <a href="#" class="submenu-link">Подменю</a>
-                            <a href="#" class="submenu-link">Подменю</a>
-                            <a href="#" class="submenu-link">Подменю</a>
-                            <a href="#" class="submenu-link">Подменю</a>
-                        </div>
-                    </div>
+
+                    <?php } ?>
+
                     <div class="menu-item search-menu-item">
+
                         <form class="search-form">
-                            <input type="search" name="" class="search-input">
+                            <input type="search" name="" class="search-input" hidden>
                         </form>
                     </div>
                 </div>
