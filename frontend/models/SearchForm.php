@@ -24,6 +24,6 @@ class SearchForm extends Model
 
     public function searchResults()
     {
-        return Product::find()->where(['like', 'name', $this->searchParam.'%'])->all();
+        return Product::find()->where(['like', 'name', $this->searchParam])->all();
     }
 }
