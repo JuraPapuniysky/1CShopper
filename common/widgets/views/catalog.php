@@ -4,6 +4,36 @@
 /* @var $pages \yii\data\Pagination */
 use yii\widgets\LinkPager;
 
+foreach ($products as $product) {
+    $js = <<<JS
+$('#add_cart-form-$product->id').submit(function() {
+
+    var cartCount = document.getElementById('cart_count').innerHTML;
+    
+     var newCartCount = Number(cartCount) + 1;
+     document.getElementById('cart_count').innerHTML = String(newCartCount);
+     
+     console.log(newCartCount);
+     
+     var form = $(this);
+
+     $.ajax({
+          url: form.attr('action'),
+          type: 'post',
+          data: form.serialize(),
+          success: function (response) {
+               $("#message-field").val("");
+          }
+     });
+     
+     alert('Товар $product->name добавлен в корзину');
+     
+
+     return false;
+});
+JS;
+    $this->registerJs($js, \yii\web\View::POS_READY);
+}
 ?>
 
 <div class="home-catalog">
@@ -20,7 +50,12 @@ use yii\widgets\LinkPager;
                         <?= substr($product->description, 0, 255) ?>
                     </div>
                     <div class="home-catalog-item-price">
-                        <?= \yii\helpers\Html:: a('В корзину', ['site/add-to-cart', 'id' => $product->id], ['class' => 'home-catalog-item-order yellow-bg']) ?>
+                        <?= \yii\helpers\Html::beginForm(['site/add-to-cart'], 'POST', [
+                                'id' => 'add_cart-form-'.$product->id,
+                        ]) ?>
+                        <input type="hidden" value="<?= $product->id ?>" name="product">
+                        <?= \yii\helpers\Html::submitButton('В корзину', ['class' => 'home-catalog-item-order yellow-bg',]) ?>
+                        <?= \yii\helpers\Html::endForm() ?>
                         <span class="price-value"><?= $product->price ?></span>
                         <span class="price-preffix">руб.</span>
                     </div>

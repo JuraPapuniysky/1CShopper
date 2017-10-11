@@ -6,6 +6,27 @@
 
 
 $this->title = $type->name;
+
+foreach ($models as $model) {
+    $js = <<<JS
+$('#add_cart-form-$model->id').submit(function() {
+
+     var form = $(this);
+
+     $.ajax({
+          url: form.attr('action'),
+          type: 'post',
+          data: form.serialize(),
+          success: function (response) {
+               $("#message-field").val("");
+          }
+     });
+
+     return false;
+});
+JS;
+    $this->registerJs($js, \yii\web\View::POS_READY);
+}
 ?>
 <main class="content" id="page-catalog">
     <div class="container">
@@ -51,11 +72,17 @@ $this->title = $type->name;
                     </div>
                 </div>
                 <div class="catalog-item-order">
-                <?php \yii\widgets\Pjax::begin(); ?>
-                    <?= \yii\helpers\Html:: a('В корзину', ['site/add-to-cart', 'id' => $model->id],
-                        ['data-method' => 'post', 'class' => 'order-item-button yellow-bg']) ?>
+
+                    <?= \yii\helpers\Html::beginForm(['site/add-to-cart'], 'POST', [
+                            'id' => 'add_cart-form-'.$model->id,
+                    ]) ?>
+                    <input type="hidden", name="product" value="<?= $model->id ?>">
+                    <?= \yii\helpers\Html::submitButton('В корзину', ['class' => 'order-item-button yellow-bg']) ?>
+
+                    <?= \yii\helpers\Html::endForm() ?>
+
                     <div class="catalog-item-price"><span class="price-value"><?= $model->price ?></span>&nbsp;<span class="price-preffix">руб.</span></div>
-                 <?php \yii\widgets\Pjax::end(); ?>
+
                 </div>
             </div>
 

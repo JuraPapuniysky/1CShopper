@@ -42,9 +42,18 @@ AppAsset::register($this);
             <div class="container">
                 <a href="/" class="logo">Logo.../</a>
                 <?= Html::a(\common\models\InfoTable::findOne(1)->main_phone, ['site/request-call'], ['class' => 'header-phone']) ?>
+                <?php
 
+                    if (Yii::$app->user->isGuest){
+                        $cart = \common\models\Cart::findOne(['user_ip' => Yii::$app->request->userIP]);
+                    }else{
+                        $cart = \common\models\Cart::findOne(['user_id' => Yii::$app->user->id]);
+                    }
+                    $count_products = $cart->getCartProducts()->count();
+                ?>
                 <div class="header-links">
-                    <?= Html::a('<img src="img/icon-cart.png">', ['site/cart'],['class' => 'cart-link']) ?>
+                    <?= Html::a('<img src="img/icon-cart.png"><text class="auth-link" id="cart_count">'.$count_products.'</text>', ['site/cart'],['class' => 'cart-link']) ?>
+
                     <div class="auth-links">
                         <?php if (Yii::$app->user->isGuest) { ?>
                             <?= Html::a('Войти', ['site/login'], ['data-method' => 'post', 'class' => 'auth-link']) ?>
@@ -168,6 +177,18 @@ AppAsset::register($this);
         </div>
     </footer>
 </div>
+<?php
+$cart_script = <<< JS
+
+function cartAdd() {
+      var count = document.getElementById('cart_count').innerHTML;
+      var newCount = count + 1;
+      document.getElementById('cart_count').innerHTML = newCount;
+}
+
+JS;
+$this->registerJs($cart_script,  yii\web\View::POS_READY);
+?>
 <?php $this->endBody() ?>
 </body>
 </html>

@@ -245,9 +245,10 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionAddToCart($id)
+    public function actionAddToCart()
     {
-
+        if (Yii::$app->request->post()) {
+            $id = Yii::$app->request->post('product');
             if (!Yii::$app->user->isGuest) {
                 if (($cart = Cart::find()->where(['user_id' => Yii::$app->user->id])->one()) !== null) {
                     $cartProduct = new CartProduct();
@@ -281,7 +282,8 @@ class SiteController extends Controller
                     }
                 }
             }
-            return $this->redirect(['site/cart']);
+        }
+            return $this->redirect(['site/index']);
     }
 
     public function actionOrder()
