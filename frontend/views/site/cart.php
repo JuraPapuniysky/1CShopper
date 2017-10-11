@@ -96,6 +96,10 @@ $this->title = 'Корзина';
                                         <div class="catalog-item-parameter-title">Цена:</div>
                                         <div class="catalog-item-parameter-value"><span class="price-value"><?= $cartProduct->product->price ?></span>&nbsp;<span class="price-preffix">руб</span></div>
                                     </div>
+                                    <div class="catalog-item-parameter catalog-item-availability">
+                                        <div class="catalog-item-parameter-title"></div>
+                                        <div class="catalog-item-parameter-value"><?= \yii\helpers\Html::a('Убрать из корзины', ['site/delete-from-cart', 'id' => $cartProduct->id]) ?></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

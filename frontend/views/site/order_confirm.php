@@ -65,8 +65,9 @@ $this->title = "Подтверждения заказа";
                         <span class="price-text">Итого к оплате:</span>
                         <span class="price-value"><b><?= $order->getOrderPrice() ?></b>&nbsp;<b class="price-preffix">руб.</b></span>
                     </div>
-                    <button class="order-confirm-call-button yellow-bg">Заказать звонок</button>
-                    <div class="call-button-description">бесплатно</div>
+                    <?= \yii\helpers\Html::beginForm(['site/order-confirm'], 'POST') ?>
+                    <?= \yii\helpers\Html::submitButton('Подтвердить заказ', ['class' => 'order-confirm-call-button yellow-bg']) ?>
+                    <?= \yii\helpers\Html::endForm() ?>
                 </div>
             </div>
         </div>

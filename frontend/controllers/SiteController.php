@@ -286,19 +286,31 @@ class SiteController extends Controller
             return $this->redirect(['site/index']);
     }
 
+    public function actionDeleteFromCart($id)
+    {
+        if (($cartProduct = CartProduct::findOne($id)) !== null){
+            $cartProduct->delete();
+        }else{
+            throw new NotFoundHttpException();
+        }
+        return $this->redirect(['site/cart']);
+    }
+
     public function actionOrder()
     {
 
         $model = new Order();
-
-        if (($user_info = UserInfo::findOne(['user_id' => Yii::$app->user->id])) !== null){
-            $model->user_id = Yii::$app->user->id;
-            $model->last_name = $user_info->last_name;
-            $model->first_name = $user_info->first_name;
-            $model->phone = $user_info->phone;
-            $model->email = User::findIdentity(Yii::$app->user->id)->email;
+        if (!Yii::$app->user->isGuest) {
+            if (($user_info = UserInfo::findOne(['user_id' => Yii::$app->user->id])) !== null) {
+                $model->user_id = Yii::$app->user->id;
+                $model->last_name = $user_info->last_name;
+                $model->first_name = $user_info->first_name;
+                $model->phone = $user_info->phone;
+                $model->email = User::findIdentity(Yii::$app->user->id)->email;
+            }
+        }else{
+            $model->user_ip = Yii::$app->request->userIP;
         }
-
         if($model->load(Yii::$app->request->post())){
             $model->status = Order::STATUS_CONFIRMED;
             if($model->save()){
@@ -311,11 +323,9 @@ class SiteController extends Controller
                     $orderProduct = new OrderProduct();
                     $orderProduct->order_id = $model->id;
                     $orderProduct->product_id = $cartProduct->product_id;
-                    if ($orderProduct->save()){
-                        $cartProduct->delete();
-                    }
+                    $orderProduct->save();
                 }
-                $cart->delete();
+
                 return $this->render('order_confirm', [
                     'order' => $model,
                 ]);
@@ -329,8 +339,31 @@ class SiteController extends Controller
 
     public function actionOrderConfirm()
     {
-        if (!Yii::$app->user->isGuest){
-
+        if (Yii::$app->request->post()) {
+            if (!Yii::$app->user->isGuest) {
+                if (($order = Order::findOne(['user_id' => Yii::$app->user->id])) !== null) {
+                    $order->status = Order::STATUS_ORDER;
+                    if ($order->save()) {
+                        $cart = Cart::findOne(['user_id' => Yii::$app->user->id]);
+                    }
+                }
+            } else {
+                if (($order = Order::findOne(['user_ip' => Yii::$app->request->userIP])) !== null) {
+                    $order->status = Order::STATUS_ORDER;
+                    if ($order->save()) {
+                        $cart = Cart::findOne(['user_ip' => Yii::$app->request->userIP]);
+                    }
+                }
+            }
+            if ($cart !== null) {
+                foreach ($cart->cartProducts as $cartProduct) {
+                    $cartProduct->delete();
+                }
+                $cart->delete();
+            }
+            return $this->goHome();
+        }else{
+            throw new NotFoundHttpException();
         }
     }
 

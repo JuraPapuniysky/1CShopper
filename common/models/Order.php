@@ -10,6 +10,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property integer $id
  * @property integer $user_id
+ * @property string $user_ip
  * @property integer $status
  * @property string $first_name
  * @property string $last_name
@@ -28,7 +29,9 @@ class Order extends \yii\db\ActiveRecord
 {
 
     const STATUS_CONFIRMED = 1;
-    const STATUS_CLOSED = 2;
+    const STATUS_ORDER = 2;
+    const STATUS_CLOSED = 3;
+
 
     /**
      * @inheritdoc
@@ -46,7 +49,7 @@ class Order extends \yii\db\ActiveRecord
         return [
             [['user_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['first_name', 'last_name', 'email', 'phone'], 'required'],
-            [['first_name', 'last_name', 'email', 'phone', 'region', 'city', 'address'], 'string', 'max' => 255],
+            [['first_name', 'last_name', 'email', 'phone', 'region', 'city', 'address', 'user_ip'], 'string', 'max' => 255],
             [['index'], 'string', 'max' => 16],
         ];
     }
@@ -66,6 +69,7 @@ class Order extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
+            'user_ip' => 'User_IP',
             'status' => 'Status',
             'first_name' => 'Имя*',
             'last_name' => 'Фамилия*',

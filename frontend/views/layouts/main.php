@@ -45,11 +45,22 @@ AppAsset::register($this);
                 <?php
 
                     if (Yii::$app->user->isGuest){
-                        $cart = \common\models\Cart::findOne(['user_ip' => Yii::$app->request->userIP]);
+                        if (($cart = \common\models\Cart::findOne(['user_ip' => Yii::$app->request->userIP])) !== null){
+                            $count_products = $cart->getCartProducts()->count();
+                        }else{
+                            $count_products = '';
+                        }
                     }else{
-                        $cart = \common\models\Cart::findOne(['user_id' => Yii::$app->user->id]);
+                        if (($cart = \common\models\Cart::findOne(['user_id' => Yii::$app->user->id])) !== null){
+                            $count_products = $cart->getCartProducts()->count();
+                        }else{
+                            $count_products = '';
+                        }
                     }
-                    $count_products = $cart->getCartProducts()->count();
+                    if ($count_products === '0'){
+                        $count_products = '';
+                    }
+
                 ?>
                 <div class="header-links">
                     <?= Html::a('<img src="img/icon-cart.png"><text class="auth-link" id="cart_count">'.$count_products.'</text>', ['site/cart'],['class' => 'cart-link']) ?>

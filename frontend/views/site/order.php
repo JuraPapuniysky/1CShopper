@@ -62,7 +62,7 @@ $this->title = 'Параметры заказа'
                             </label>
                         </div>
                     </div>
-                <?= Html::submitButton('Подтвердить заказ', ['class' => 'submit-order-button yellow-bg']) ?>
+                <?= Html::submitButton('Подтвердить данные', ['class' => 'submit-order-button yellow-bg']) ?>
                 <?php ActiveForm::end(); ?>
 
 

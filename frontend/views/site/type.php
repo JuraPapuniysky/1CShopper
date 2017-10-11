@@ -12,6 +12,15 @@ foreach ($models as $model) {
 $('#add_cart-form-$model->id').submit(function() {
 
      var form = $(this);
+     
+     var cartCount = document.getElementById('cart_count').innerHTML;
+    
+     var newCartCount = Number(cartCount) + 1;
+     document.getElementById('cart_count').innerHTML = String(newCartCount);
+     
+     console.log(newCartCount);
+     
+     var form = $(this);
 
      $.ajax({
           url: form.attr('action'),
@@ -21,7 +30,7 @@ $('#add_cart-form-$model->id').submit(function() {
                $("#message-field").val("");
           }
      });
-
+    alert('Товар $model->name добавлен в корзину');
      return false;
 });
 JS;
