@@ -40,7 +40,7 @@ AppAsset::register($this);
     <header class="header">
         <div class="header-desktop hidden-xs hidden-sm yellow-bg">
             <div class="container">
-                <a href="/" class="logo">Logo.../</a>
+                <?= Html::a(Html::img('img/logo.png'), ['site/index']) ?>
                 <?= Html::a(\common\models\InfoTable::findOne(1)->main_phone, ['site/request-call'], ['class' => 'header-phone']) ?>
                 <?php
 
@@ -63,7 +63,7 @@ AppAsset::register($this);
 
                 ?>
                 <div class="header-links">
-                    <?= Html::a('<img src="img/icon-cart.png"><text class="auth-link" id="cart_count">'.$count_products.'</text>', ['site/cart'],['class' => 'cart-link']) ?>
+                    <?= Html::a('<img src="img/icon-cart.png"><span class="badge" id="cart_count">'.$count_products.'</span>', ['site/cart'],['class' => 'cart-link']) ?>
 
                     <div class="auth-links">
                         <?php if (Yii::$app->user->isGuest) { ?>
