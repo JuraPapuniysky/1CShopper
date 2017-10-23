@@ -107,7 +107,7 @@ AppAsset::register($this);
         </div>
         <div class="header-mobile visible-xs visible-sm yellow-bg">
             <div class="container">
-                <a href="/" class="logo">Logo...///</a>
+                <?= Html::a(Html::img('img/logo1.png'), ['site/index']) ?>
                 <a href="/" class="cart-link"><img src="img/icon-cart.png"></a>
                 <button class="burger-menu">
                     <span class="burger-line"></span>
