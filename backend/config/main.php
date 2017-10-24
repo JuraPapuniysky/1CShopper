@@ -44,14 +44,18 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
+
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
+
+            'class' => 'yii\web\UrlManager',
+            'baseUrl' => 'http://f99920oj.bget.ru',
+
+            //'enablePrettyUrl' => true,
+            //'showScriptName' => false,
+            //'rules' => [
+            //],
         ],
-        */
+
     ],
     'params' => $params,
 ];

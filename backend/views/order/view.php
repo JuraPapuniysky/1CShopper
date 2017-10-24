@@ -42,4 +42,22 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+
+    <div class="row">
+        <?php foreach ($model->orderProducts as $orderProduct){ ?>
+        <div class="col-sm-6 col-md-4">
+
+            <div class="thumbnail">
+                <?= Html::img('/frontend/web/'.$orderProduct->product->productImages[0]->image->src) ?>
+                <div class="caption">
+                    <h3><?= $orderProduct->product->name ?></h3>
+                    <p>...</p>
+                    <p><?= Html::a('Удалить', ['order/delete-product', 'order_product_id' => $orderProduct->id]) ?></p>
+                </div>
+            </div>
+        </div>
+        <?php } ?>
+    </div>
+
+
 </div>

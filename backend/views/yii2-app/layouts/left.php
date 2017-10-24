@@ -18,7 +18,7 @@
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Search..."/>
-              <span class="input-group-btn">
+                <span class="input-group-btn">
                 <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
               </span>
@@ -44,7 +44,13 @@
                             ['label' => 'Продукты', 'icon' => 'file-code-o', 'url' => ['/product'],],
                             ['label' => 'Слайдер', 'icon' => 'file-code-o', 'url' => ['/slider'],],
                             ['label' => 'Пользователи', 'icon' => 'file-code-o', 'url' => ['/user'],],
-                            ['label' => 'Заказы', 'icon' => 'file-code-o', 'url' => ['/order'],],
+                            [
+                                'label' => 'Заказы', 'icon' => 'share', 'url' => '#', 'items' => [
+                                ['label' => 'Все заказы', 'icon' => 'file-code-o', 'url' => ['/order']],
+                                ['label' => 'Новые заказы', 'icon' => 'file-code-o', 'url' => ['/order/new']],
+                                ['label' => 'Закрытые заказы', 'icon' => 'file-code-o', 'url' => ['/order/close']],
+                            ]
+                            ],
                             ['label' => 'Информация', 'icon' => 'file-code-o', 'url' => ['/info-table'],],
 
                             [
