@@ -14,7 +14,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'user_id')->textInput() ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList([
+        \common\models\Order::STATUS_CONFIRMED => 'В процессе',
+        \common\models\Order::STATUS_ORDER => 'Заказан',
+        \common\models\Order::STATUS_CLOSED => 'Закрыт',
+    ]) ?>
 
     <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
 
