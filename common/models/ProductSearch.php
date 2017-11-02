@@ -20,7 +20,7 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'category_id', 'type_id', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'description'], 'safe'],
+            [['name', 'category', 'type', 'description'], 'safe'],
             [['price'], 'number'],
         ];
     }
@@ -45,17 +45,26 @@ class ProductSearch extends Product
     {
         $query = Product::find();
 
+        $query->joinWith(['category']);
+        $query->joinWith(['type']);
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $dataProvider->sort->attributes['category'] = [
+            'asc' => ['category.name' => SORT_ASC],
+            'desc' => ['category.name' => SORT_DESC],
+        ];
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+        $dataProvider->sort->attributes['type'] = [
+            'asc' => ['type.name' => SORT_ASC],
+            'desc' => ['type.name' => SORT_DESC],
+        ];
+
+        if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
@@ -70,6 +79,8 @@ class ProductSearch extends Product
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'category.name', $this->category])
+            ->andFilterWhere(['like', 'type.name', $this->type])
             ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;

@@ -88,12 +88,22 @@ class Product extends \yii\db\ActiveRecord
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getType()
     {
         return $this->hasOne(Type::className(), ['id' => 'type_id']);
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
     /**
