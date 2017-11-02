@@ -42,18 +42,18 @@ JS;
         <div class="sorting-form-container">
             <div class="sorting-form-category"><?= $type->name ?></div>
             <form class="sorting-form">
-                <div class="sorting-form-title">Сортировка по:</div>
+                <div class="sorting-form-title"></div>
                 <label class="sort-label">
                     <input type="radio" name="sortby" class="radio-default" value="sortbyname" checked="checked">
-                    <span class="sort-text">Имени</span>
+                    <span class="sort-text"></span>
                 </label>
                 <label class="sort-label">
                     <input type="radio" name="sortby" class="radio-default" value="sortbydate">
-                    <span class="sort-text">Дате</span>
+                    <span class="sort-text"></span>
                 </label>
                 <label class="sort-label">
                     <input type="radio" name="sortby" class="radio-default" value="sortbypopularity">
-                    <span class="sort-text">Популярности</span>
+                    <span class="sort-text"></span>
                 </label>
             </form>
         </div>
@@ -65,18 +65,16 @@ JS;
                     <?= \yii\helpers\Html::a('<img src="'.$model->productImages[0]->image->src.'">', ['site/product', 'id' => $model->id]) ?>
                 </div>
                 <div class="catalog-item-info">
-                    <div class="catalog-item-name"><?= $model->name ?></div>
+                    <div class="catalog-item-name"><?= \yii\helpers\Html::a($model->name, ['site/product', 'id' => $model->id]) ?></div>
                     <div class="catalog-item-description">
                         <?= substr($model->description, 0, 300) ?>
                     </div>
                     <div class="catalog-item-parameters">
                         <div class="catalog-item-parameter catalog-item-availability">
-                            <div class="catalog-item-parameter-title">Наличие товара:</div>
-                            <div class="catalog-item-parameter-value">есть</div>
+
                         </div>
                         <div class="catalog-item-parameter catalog-item-quantity">
-                            <div class="catalog-item-parameter-title">Количество:</div>
-                            <div class="catalog-item-parameter-value">2</div>
+
                         </div>
                     </div>
                 </div>

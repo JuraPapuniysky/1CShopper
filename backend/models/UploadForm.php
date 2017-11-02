@@ -31,8 +31,8 @@ class UploadForm extends Model
         if ($this->validate()) {
             foreach ($this->imageFiles as $file) {
                 $image = new Image();
-                $path = 'uploads/product/' . $file->baseName . time(). '.' . $file->extension;
-                $file->saveAs('../../frontend/web/'.$path);
+                $path = '../uploads/product/' . $file->baseName . time(). '.' . $file->extension;
+                $file->saveAs($path);
                 $image->src = $path;
                 if ($image->save()){
                     $productImage = new ProductImage();

@@ -1,6 +1,6 @@
 <?php
 return [
-    'adminEmail' => 'jurapapunitsky@gmail.com',
-    'supportEmail' => 'jurapapunitsky@gmail.com',
+    'adminEmail' => 'admin@1cmagazine.ru',
+    'supportEmail' => 'order@1cmagazine.ru',
     'user.passwordResetTokenExpire' => 3600,
 ];

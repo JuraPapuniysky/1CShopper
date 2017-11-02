@@ -85,12 +85,10 @@ $this->title = 'Корзина';
                                 </div>
                                 <div class="catalog-item-parameters">
                                     <div class="catalog-item-parameter catalog-item-availability">
-                                        <div class="catalog-item-parameter-title">Наличие товара:</div>
-                                        <div class="catalog-item-parameter-value">есть</div>
+
                                     </div>
                                     <div class="catalog-item-parameter catalog-item-quantity">
-                                        <div class="catalog-item-parameter-title">Количество:</div>
-                                        <div class="catalog-item-parameter-value">2</div>
+
                                     </div>
                                     <div class="catalog-item-parameter catalog-item-price">
                                         <div class="catalog-item-parameter-title">Цена:</div>

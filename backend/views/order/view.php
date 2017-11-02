@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-6 col-md-4">
 
             <div class="thumbnail">
-                <?= Html::img('/frontend/web/'.$orderProduct->product->productImages[0]->image->src) ?>
+                <?= Html::img('../'.$orderProduct->product->productImages[0]->image->src) ?>
                 <div class="caption">
                     <h3><?= $orderProduct->product->name ?></h3>
                     <p>...</p>

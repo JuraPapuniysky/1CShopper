@@ -16,7 +16,7 @@ $this->title = 'Вход на сайт';
         <div class="login-container">
             <div class="login-title-container">
                 <span>Вход</span>
-                <span>Войдите, используя соц. сеть</span>
+                <span></span>
             </div>
             <div class="login-inputs-container">
                 <div class="local-login-form">
@@ -48,14 +48,10 @@ $this->title = 'Вход на сайт';
 
                 </div>
                 <div class="connection-word">
-                    или
+
                 </div>
                 <div class="social-login-form">
-                    <button class="social-login-link"><img src="img/footer-icon-gplus.png"><span>Гугл аккаунт</span></button>
-                    <button class="social-login-link"><img src="img/footer-icon-vk.png"><span>Вконтакте</span></button>
-                    <button class="social-login-link"><img src="img/footer-icon-tw.png"><span>Твиттер</span></button>
-                    <button class="social-login-link"><img src="img/footer-icon-ok.png"><span>Одноклассники</span></button>
-                    <button class="social-login-link"><img src="img/footer-icon-fb.png"><span>Фейсбук</span></button>
+
                 </div>
             </div>
         </div>

@@ -239,7 +239,7 @@ use yii\helpers\Html;
                                  alt="User Image"/>
 
                             <p>
-                                Alexander Pierce - Web Developer
+                               <?= \common\models\User::findOne(Yii::$app->user->id)->username ?>
                                 <small>Member since Nov. 2012</small>
                             </p>
                         </li>
