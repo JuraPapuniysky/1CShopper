@@ -367,6 +367,20 @@ class SiteController extends Controller
         }
     }
 
+
+    public function actionCategory($id)
+    {
+        $models = $this->findProductsByCategory($id);
+
+        return $this->render('type', [
+            'models' => $models,
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @return string
+     */
     public function actionType($id)
     {
         $models = $this->findProductsByType($id);
@@ -377,6 +391,11 @@ class SiteController extends Controller
         ]);
     }
 
+
+    /**
+     * @param $id
+     * @return string
+     */
     public function actionProduct($id)
     {
         $model = $this->findProduct($id);
@@ -430,7 +449,16 @@ class SiteController extends Controller
         if (($model = Product::findAll(['type_id' => $id])) !== null){
             return $model;
         }else{
-            throw new NotFoundHttpException('Нет товара в даной категории');
+            throw new NotFoundHttpException('Нет продуктов в даной категории');
+        }
+    }
+
+    protected function findProductsByCategory($id)
+    {
+        if (($model = Product::findAll(['category_id' => $id])) !== null){
+            return $model;
+        }else {
+            throw new NotFoundHttpException('Нет продуктов в категории');
         }
     }
 

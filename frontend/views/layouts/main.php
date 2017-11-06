@@ -83,7 +83,7 @@ AppAsset::register($this);
 
                 <?php $categories = \common\models\Category::find()->orderBy('num')->all();  foreach ($categories as $category) {?>
                     <div class="menu-item">
-                        <a href="/" class="main-menu-link"><?= $category->name ?></a>
+                        <?= Html::a($category->name, ['site/category', 'id' => $category->id], ['class' => 'main-menu-link']) ?>
                         <div class="submenu-links">
                             <?php foreach ($category->getTypes()->all() as $type) { ?>
                                 <?= Html::a($type->name, ['site/type', 'id' => $type->id], ['class' => 'submenu-link']) ?>

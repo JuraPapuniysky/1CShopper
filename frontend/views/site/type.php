@@ -4,8 +4,12 @@
 /* @var $models \common\models\Product[] */
 /* @var $type \common\models\Type */
 
+if (isset($type)){
+    $this->title = $type->name;
+}else{
+    $this->title = 'Продукты';
+}
 
-$this->title = $type->name;
 
 foreach ($models as $model) {
     $js = <<<JS
@@ -40,7 +44,11 @@ JS;
 <main class="content" id="page-catalog">
     <div class="container">
         <div class="sorting-form-container">
-            <div class="sorting-form-category"><?= $type->name ?></div>
+            <div class="sorting-form-category"><?php if(isset($type)){
+                    echo $type->name;
+                }else{
+                echo 'Продукты';
+                } ?></div>
             <form class="sorting-form">
                 <div class="sorting-form-title"></div>
                 <label class="sort-label">
