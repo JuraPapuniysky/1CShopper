@@ -9,6 +9,7 @@ use common\models\ProductImage;
 use common\models\SliderImage;
 use yii\base\Model;
 use yii\web\UploadedFile;
+use common\models\Product;
 
 class UploadForm extends Model
 {
@@ -30,7 +31,12 @@ class UploadForm extends Model
     {
         if ($this->validate()) {
             foreach ($this->imageFiles as $file) {
-                $image = new Image();
+                $product = Product::findOne($this->productId);
+                if ($product->productImages[0]->image === null){
+                    $image = new Image();
+                }else{
+                    $image = $product->productImages[0]->image;
+                }
                 $path = '../uploads/product/' . $file->baseName . time(). '.' . $file->extension;
                 $file->saveAs($path);
                 $image->src = $path;

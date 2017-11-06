@@ -361,6 +361,7 @@ class SiteController extends Controller
                 }
                 $cart->delete();
             }
+            $order->sendEmail();
             return $this->goHome();
         }else{
             throw new NotFoundHttpException();

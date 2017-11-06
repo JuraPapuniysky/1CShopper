@@ -101,4 +101,18 @@ class Order extends \yii\db\ActiveRecord
         }
         return $price;
     }
+
+    public function sendEmail()
+    {
+        return Yii::$app
+            ->mailer_order
+            ->compose(
+                ['html' => 'order-html', 'text' => 'order-text'],
+                ['id' => $this->id]
+            )
+            ->setFrom([Yii::$app->params['orderEmail'] => Yii::$app->name . ' robot'])
+            ->setTo('jurapapunitsky@gmail.com')
+            ->setSubject('New order in ' . Yii::$app->name)
+            ->send();
+    }
 }
