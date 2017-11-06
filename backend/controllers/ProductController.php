@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\UploadForm;
+use common\models\CartProduct;
 use common\models\Type;
 use Yii;
 use common\models\Product;
@@ -113,7 +114,16 @@ class ProductController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        foreach ($model->productImages as $image){
+            $image->delete();
+        }
+
+        foreach (CartProduct::findAll(['product_id' => $id]) as $cartProduct){
+            $cartProduct->delete();
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }
