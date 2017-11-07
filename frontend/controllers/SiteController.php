@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\About;
 use common\models\Cart;
 use common\models\CartProduct;
 use common\models\Order;
@@ -142,13 +143,19 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays about page.
-     *
-     * @return mixed
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
      */
-    public function actionAbout()
+    public function actionAbout($id)
     {
-        return $this->render('about');
+        if (($model = About::findOne($id)) !== null){
+            return $this->render('about',[
+                'model' => $model,
+            ]);
+        }else{
+            throw new NotFoundHttpException('Not Found');
+        }
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace common\models;
 
 use Yii;
-
+use yii\behaviors\TimestampBehavior;
 /**
  * This is the model class for table "cart".
  *
@@ -33,6 +33,13 @@ class Cart extends \yii\db\ActiveRecord
         return [
             [['user_id', 'created_at', 'updated_at'], 'integer'],
             [['user_ip'], 'string', 'max' => 20],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
         ];
     }
 

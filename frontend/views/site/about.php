@@ -1,16 +1,25 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $model \common\models\About */
 
 use yii\helpers\Html;
 
 $this->title = 'About';
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
-<div class="site-about">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>This is the About page. You may modify the following file to customize its content:</p>
-
-    <code><?= __FILE__ ?></code>
-</div>
+<main class="content" id="page-account">
+    <div class="container">
+        <div class="user-container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="catalog-item-name"><?= $model->name ?></div>
+                    <div class="catalog-item-description">
+                        <?= $model->text ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>

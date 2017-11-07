@@ -167,10 +167,9 @@ AppAsset::register($this);
                 <div class="logo-text">Lorem</div>
             </div>
             <div class="footer-menu-links footer-center-block">
-                <a href="#" class="footer-menu-link">Где купить?</a>
-                <a href="#" class="footer-menu-link">О нас</a>
-                <a href="#" class="footer-menu-link">Новости</a>
-                <a href="#" class="footer-menu-link">Покупка и доставка</a>
+                <?php foreach (\common\models\About::find()->all() as $about){ ?>
+                    <?= Html::a($about->name, ['site/about', 'id' => $about->id], ['class' => 'footer-menu-link']) ?>
+                <?php } ?>
             </div>
             <div class="footer-info-links footer-right-block">
                 <div class="footer-city"><span>Ваш город: </span><a href="#" class="your-city"><?php echo $city; ?></a></div>
