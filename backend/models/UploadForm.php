@@ -32,7 +32,7 @@ class UploadForm extends Model
         if ($this->validate()) {
             foreach ($this->imageFiles as $file) {
                 $product = Product::findOne($this->productId);
-                if ($product->productImages[0]->image === null){
+                if (!isset($product->productImages[0]->image)){
                     $image = new Image();
                 }else{
                     $image = $product->productImages[0]->image;

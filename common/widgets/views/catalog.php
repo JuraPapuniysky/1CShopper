@@ -42,7 +42,9 @@ JS;
             <?php foreach ($products as $product) { ?>
             <div class="home-catalog-item">
                 <div class="home-catalog-item-photo">
+                    <?php if(isset($product->productImages[0]->image)){ ?>
                     <img src="<?= $product->productImages[0]->image->src ?>">
+                    <?php } ?>
                 </div>
                 <div class="home-catalog-item-info">
                     <div class="home-catalog-item-title"><?= $product->name ?></div>
