@@ -91,6 +91,9 @@ AppAsset::register($this);
                         </div>
                     </div>
                 <?php } ?>
+                <div class="menu-item">
+                    <?= Html::a('Новости и акции', ['site/news-promotion'], ['class' => 'main-menu-link']) ?>
+                </div>
 
                 <div class="menu-item search-menu-item">
 

@@ -5,7 +5,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'About';
+$this->title = $model->name;
 
 ?>
 <main class="content" id="page-account">

@@ -1,9 +1,11 @@
 <?php
+
 namespace frontend\controllers;
 
 use common\models\About;
 use common\models\Cart;
 use common\models\CartProduct;
+use common\models\NewsPromotion;
 use common\models\Order;
 use common\models\OrderProduct;
 use common\models\Product;
@@ -149,11 +151,11 @@ class SiteController extends Controller
      */
     public function actionAbout($id)
     {
-        if (($model = About::findOne($id)) !== null){
-            return $this->render('about',[
+        if (($model = About::findOne($id)) !== null) {
+            return $this->render('about', [
                 'model' => $model,
             ]);
-        }else{
+        } else {
             throw new NotFoundHttpException('Not Found');
         }
     }
@@ -234,13 +236,13 @@ class SiteController extends Controller
     public function actionCart()
     {
         $query = Cart::find();
-        if (!Yii::$app->user->isGuest){
-           $cart = $query->where(['user_id' => Yii::$app->user->id])->one();
-        }else{
-           $cart = $query->where(['user_ip' => Yii::$app->request->userIP])->one();
+        if (!Yii::$app->user->isGuest) {
+            $cart = $query->where(['user_id' => Yii::$app->user->id])->one();
+        } else {
+            $cart = $query->where(['user_ip' => Yii::$app->request->userIP])->one();
         }
 
-        if (($user_info = UserInfo::findOne(['user_id' => Yii::$app->user->id])) === null){
+        if (($user_info = UserInfo::findOne(['user_id' => Yii::$app->user->id])) === null) {
             $user_info = new UserInfo();
             $user_info->user_id = Yii::$app->user->id;
             $user_info->save();
@@ -290,14 +292,14 @@ class SiteController extends Controller
                 }
             }
         }
-            return $this->redirect(['site/index']);
+        return $this->redirect(['site/index']);
     }
 
     public function actionDeleteFromCart($id)
     {
-        if (($cartProduct = CartProduct::findOne($id)) !== null){
+        if (($cartProduct = CartProduct::findOne($id)) !== null) {
             $cartProduct->delete();
-        }else{
+        } else {
             throw new NotFoundHttpException();
         }
         return $this->redirect(['site/cart']);
@@ -315,18 +317,18 @@ class SiteController extends Controller
                 $model->phone = $user_info->phone;
                 $model->email = User::findIdentity(Yii::$app->user->id)->email;
             }
-        }else{
+        } else {
             $model->user_ip = Yii::$app->request->userIP;
         }
-        if($model->load(Yii::$app->request->post())){
+        if ($model->load(Yii::$app->request->post())) {
             $model->status = Order::STATUS_CONFIRMED;
-            if($model->save()){
-                if (!Yii::$app->user->isGuest){
+            if ($model->save()) {
+                if (!Yii::$app->user->isGuest) {
                     $cart = Cart::findOne(['user_id' => Yii::$app->user->id]);
-                }else{
+                } else {
                     $cart = Cart::findOne(['user_ip' => Yii::$app->request->userIP]);
                 }
-                foreach ($cart->cartProducts as $cartProduct){
+                foreach ($cart->cartProducts as $cartProduct) {
                     $orderProduct = new OrderProduct();
                     $orderProduct->order_id = $model->id;
                     $orderProduct->product_id = $cartProduct->product_id;
@@ -370,7 +372,7 @@ class SiteController extends Controller
             }
             $order->sendEmail();
             return $this->goHome();
-        }else{
+        } else {
             throw new NotFoundHttpException();
         }
     }
@@ -409,18 +411,18 @@ class SiteController extends Controller
         $model = $this->findProduct($id);
 
         return $this->render('product', [
-           'model' => $model,
+            'model' => $model,
         ]);
     }
 
     public function actionUpdateUserInfo()
     {
-       if (($model = UserInfo::findOne(['user_id' => Yii::$app->user->id])) === null){
-           $model = new UserInfo();
-           $model->user_id = Yii::$app->user->id;
-       }
+        if (($model = UserInfo::findOne(['user_id' => Yii::$app->user->id])) === null) {
+            $model = new UserInfo();
+            $model->user_id = Yii::$app->user->id;
+        }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()){
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['site/cart']);
         } else {
             return $this->render('update_user_info', [
@@ -433,40 +435,96 @@ class SiteController extends Controller
     {
         $model = new SearchForm();
 
-        if($model->load(Yii::$app->request->post())){
+        if ($model->load(Yii::$app->request->post())) {
 
             return $this->render('search', [
-               'products' => $model->searchResults(),
+                'products' => $model->searchResults(),
             ]);
-        }else{
+        } else {
             return $this->goHome();
         }
     }
 
+
+    /**
+     * @param null $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionNewsPromotion($id = null)
+    {
+        if ($id === null) {
+            if (($models = NewsPromotion::find()->all()) !== null) {
+                return $this->render('news-promotions', [
+                    'models' => $models,
+                ]);
+            } else {
+                throw new NotFoundHttpException();
+            }
+        } else {
+
+            return $this->render('news-promotion', [
+                'model' => $this->findNewsPromotion($id)
+            ]);
+        }
+
+    }
+
+
+    /**
+     * @param $id
+     * @return static
+     * @throws NotFoundHttpException
+     */
     protected function findProduct($id)
     {
-        if (($model = Product::findOne($id)) !== null){
+        if (($model = Product::findOne($id)) !== null) {
             return $model;
         } else {
-          throw new NotFoundHttpException('Продукт не найден');
+            throw new NotFoundHttpException('Продукт не найден');
         }
     }
 
+
+    /**
+     * @param $id
+     * @return static[]
+     * @throws NotFoundHttpException
+     */
     protected function findProductsByType($id)
     {
-        if (($model = Product::findAll(['type_id' => $id])) !== null){
+        if (($model = Product::findAll(['type_id' => $id])) !== null) {
             return $model;
-        }else{
+        } else {
             throw new NotFoundHttpException('Нет продуктов в даной категории');
         }
     }
 
+    /**
+     * @param $id
+     * @return static[]
+     * @throws NotFoundHttpException
+     */
     protected function findProductsByCategory($id)
     {
-        if (($model = Product::findAll(['category_id' => $id])) !== null){
+        if (($model = Product::findAll(['category_id' => $id])) !== null) {
             return $model;
-        }else {
+        } else {
             throw new NotFoundHttpException('Нет продуктов в категории');
+        }
+    }
+
+    /**
+     * @param $id
+     * @return static
+     * @throws NotFoundHttpException
+     */
+    protected function findNewsPromotion($id)
+    {
+        if (($model = NewsPromotion::findOne($id)) !== null){
+            return $model;
+        } else {
+            throw new NotFoundHttpException('News or promotion not found');
         }
     }
 

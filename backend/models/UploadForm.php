@@ -5,6 +5,8 @@ namespace backend\models;
 
 
 use common\models\Image;
+use common\models\NewsPromotion;
+use common\models\NewsPromotionImage;
 use common\models\ProductImage;
 use common\models\SliderImage;
 use yii\base\Model;
@@ -66,6 +68,28 @@ class UploadForm extends Model
                     $productImage->image_id = $image->id;
                     $productImage->save();
                 }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function uploadNewsPromotion()
+    {
+        if ($this->validate()) {
+            foreach ($this->imageFiles as $file) {
+                $product = NewsPromotion::findOne($this->productId);
+                if (!isset($product->productImages[0]->image)){
+                    $image = new NewsPromotionImage();
+                    $image->news_promotion_id = $product->id;
+                }else{
+                    $image = $product->newsPromotionImage->src;
+                }
+                $path = '../uploads/news_promotion/' . $file->baseName . time(). '.' . $file->extension;
+                $file->saveAs($path);
+                $image->src = $path;
+                $image->save();
             }
             return true;
         } else {

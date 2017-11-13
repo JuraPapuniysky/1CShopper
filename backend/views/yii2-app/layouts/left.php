@@ -53,6 +53,7 @@
                             ],
                             ['label' => 'Информация', 'icon' => 'file-code-o', 'url' => ['/info-table'],],
                             ['label' => 'Информация сайта', 'icon' => 'file-code-o', 'url' => ['/about'],],
+                            ['label' => 'Новости и акции', 'icon' => 'file-code-o', 'url' => ['/news-promotion'],],
 
                             [
                                 'label' => 'Level One',
