@@ -16,6 +16,8 @@ $this->title = $model->title;
                     <div class="catalog-item-photo">
                         <?php if ($model->newsPromotionImage !== null) { ?>
                         <img src="<?= $model->newsPromotionImage->src ?>">
+                        <?php }else{ ?>
+                            <img src="">
                         <?php } ?>
                     </div>
                 </div>

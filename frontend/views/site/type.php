@@ -70,7 +70,11 @@ JS;
             <?php foreach ($models as $model) { ?>
             <div class="catalog-item">
                 <div class="catalog-item-photo">
+                    <?php if (isset($model->productImages[0])){ ?>
                     <?= \yii\helpers\Html::a('<img src="'.$model->productImages[0]->image->src.'">', ['site/product', 'id' => $model->id]) ?>
+                    <?php } else { ?>
+                        <?= \yii\helpers\Html::a('<img src="#">', ['site/product', 'id' => $model->id]) ?>
+                    <?php } ?>
                 </div>
                 <div class="catalog-item-info">
                     <div class="catalog-item-name"><?= \yii\helpers\Html::a($model->name, ['site/product', 'id' => $model->id]) ?></div>

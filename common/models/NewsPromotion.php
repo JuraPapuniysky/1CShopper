@@ -69,4 +69,10 @@ class NewsPromotion extends \yii\db\ActiveRecord
     {
         return $this->hasOne(NewsPromotionImage::className(), ['news_promotion_id' => 'id']);
     }
+
+    public function beforeDelete()
+    {
+        $this->newsPromotionImage->delete();
+        return parent::beforeDelete();
+    }
 }

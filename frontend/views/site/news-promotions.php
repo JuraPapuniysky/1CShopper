@@ -37,6 +37,8 @@ $this->title = 'Новости и акции';
                     <div class="catalog-item-photo">
                         <?php if ($model->newsPromotionImage !== null) { ?>
                         <?= \yii\helpers\Html::a('<img src="'.$model->newsPromotionImage->src.'">', ['site/news-promotion', 'id' => $model->id]) ?>
+                        <?php }else { ?>
+                            <?= \yii\helpers\Html::a('<img src="/">', ['site/news-promotion', 'id' => $model->id]) ?>
                         <?php } ?>
                     </div>
 
@@ -53,6 +55,12 @@ $this->title = 'Новости и акции';
 
                             </div>
                         </div>
+
+                    </div>
+                    <div class="catalog-item-order">
+
+                        <?= \yii\helpers\Html::a('Подробно',['site/news-promotion', 'id' => $model->id], ['class' => 'order-item-button yellow-bg']) ?>
+
                     </div>
                 </div>
 
