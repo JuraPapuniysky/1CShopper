@@ -11,7 +11,7 @@
             <div class="home-slider-item">
                 <div class="home-slider-item-inner">
                     <div class="slide-column-left slide-photo-item">
-                        <img src="<?= $item->sliderImages[0]->image->src ?>">
+                       <a href="<?= $item->name ?>"><img src="<?= $item->sliderImages[0]->image->src ?>"></a>
                     </div>
                     <div class="slide-column-center">
                         <div class="slide-column-center-top slide-photo-item">
