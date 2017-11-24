@@ -111,7 +111,7 @@ class Order extends \yii\db\ActiveRecord
                 ['id' => $this->id]
             )
             ->setFrom([Yii::$app->params['orderEmail'] => Yii::$app->name . ' robot'])
-            ->setTo('jurapapunitsky@gmail.com')
+            ->setTo('zakaz.c-tim.corp@yandex.ru')
             ->setSubject('New order in ' . Yii::$app->name)
             ->send();
     }

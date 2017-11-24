@@ -29,7 +29,7 @@ class OrderController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'view', 'create', 'update', 'delete', 'delete-product'],
+                        'actions' => ['logout', 'index', 'view', 'create', 'update', 'delete', 'delete-product', 'new', 'close'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

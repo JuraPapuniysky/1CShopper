@@ -41,6 +41,9 @@ AppAsset::register($this);
         <div class="header-desktop hidden-xs hidden-sm yellow-bg">
             <div class="container">
                 <?= Html::a(Html::img('img/logo.png'), ['site/index']) ?>
+                <?= Html::a(Html::img('img/franch.png'), ['site/index']) ?>
+                <?= Html::a(Html::img('img/kasper.png'), ['site/index']) ?>
+
                 <?= Html::a(\common\models\InfoTable::findOne(1)->main_phone, ['site/request-call'], ['class' => 'header-phone']) ?>
                 <?php
 
@@ -111,6 +114,7 @@ AppAsset::register($this);
         <div class="header-mobile visible-xs visible-sm yellow-bg">
             <div class="container">
                 <?= Html::a(Html::img('img/logo1.png'), ['site/index']) ?>
+
                 <a href="/" class="cart-link"><img src="img/icon-cart.png"></a>
                 <button class="burger-menu">
                     <span class="burger-line"></span>
